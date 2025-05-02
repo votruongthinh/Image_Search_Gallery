@@ -16,7 +16,7 @@
 
 ```bash
 git clone https://github.com/votruongthinh/Image_Search_Gallery.git
-cd image-search-app
+cd Image_Search_Gallery
 ```
 
 ### 2: Cài đặt thư viện node_modules
