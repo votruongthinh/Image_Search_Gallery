@@ -6,6 +6,7 @@ export default function ImageGrid({ images, loading, error }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
+  // Xử lý phím Esc để đóng modal
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -22,7 +23,7 @@ export default function ImageGrid({ images, loading, error }) {
   }, [selectedImage]);
 
   const toggleFullscreen = () => {
-    setIsFullscreen(!isFullscreen);
+    setIsFullscreen((prev) => !prev);
   };
 
   if (loading || error || images.length === 0) {
@@ -38,19 +39,21 @@ export default function ImageGrid({ images, loading, error }) {
   return (
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {images.map((img) => (
+        {images.slice(0, 12).map((img) => (
           <div
             key={img.id}
             className="overflow-hidden rounded-lg shadow-lg cursor-pointer"
             onClick={() => {
               setSelectedImage(img);
-              setIsFullscreen(false);
+              setIsFullscreen(false); // Reset chế độ toàn màn hình khi chọn ảnh mới
             }}
           >
             <img
               src={img.urls.small}
               alt={img.alt_description || "Image"}
               className="w-full h-60 object-cover"
+              loading="lazy" // Tải ảnh lười để tối ưu
+              onError={(e) => console.error("Error loading image:", e)} // Log lỗi nếu ảnh không tải được
             />
           </div>
         ))}
@@ -73,6 +76,7 @@ export default function ImageGrid({ images, loading, error }) {
             <button
               onClick={toggleFullscreen}
               className="absolute top-2 right-2 p-2 bg-white/80 rounded-full z-50 text-xl hover:bg-white"
+              aria-label={isFullscreen ? "Minimize" : "Maximize"}
             >
               {isFullscreen ? <FiMinimize2 /> : <FiMaximize2 />}
             </button>
@@ -80,12 +84,13 @@ export default function ImageGrid({ images, loading, error }) {
             <div className="flex flex-col gap-4">
               <div className="flex-1">
                 <img
-                  src={selectedImage.urls.full}
+                  src={selectedImage.urls.regular} // Sử dụng regular thay vì full để giảm tải
                   alt={selectedImage.alt_description || "Image"}
                   className={`w-full object-contain rounded-lg select-none ${
                     isFullscreen ? "h-[85vh]" : "h-[200px] sm:h-[300px]"
                   }`}
                   style={{ userSelect: "none", touchAction: "pan-y" }}
+                  onError={(e) => console.error("Error loading full image:", e)} // Log lỗi nếu ảnh không tải được
                 />
               </div>
 

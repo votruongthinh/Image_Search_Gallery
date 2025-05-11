@@ -35,8 +35,8 @@ export default function SearchBar({ onSearch, onReset, images }) {
       return false;
     }
     // Kiểm tra query chỉ chứa ký tự đặc biệt (cho phép ký tự Unicode)
-    if (!/[\p{L}\p{N}]/u.test(trimmedQuery)) {
-      setError("Keyword must contain at least one letter or number");
+    if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?]/.test(trimmedQuery)) {
+      setError("Keyword cannot contain special characters (e.g., !@#$%).");
       return false;
     }
     return true;
