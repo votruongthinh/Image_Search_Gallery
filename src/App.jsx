@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getImages, resetImages } from "./features/images/imagesSlice.js";
 import SearchBar from "./features/images/SearchBar";
 import ImageGrid from "./features/images/ImageGrid";
+import { FaSearch } from "react-icons/fa";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,7 +18,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-center py-8">Image Search App</h1>
+      <h1 className="text-4xl font-bold text-center py-8 flex items-center justify-center gap-3 text-gray-800">
+        <FaSearch className="text-blue-500" />
+        Image Search
+      </h1>
+
       <SearchBar
         onSearch={handleSearch}
         onReset={handleReset}

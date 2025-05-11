@@ -5,6 +5,23 @@ export default function SearchBar({ onSearch, onReset, images }) {
   const [error, setError] = useState("");
   const [searchSubmitted, setSearchSubmitted] = useState(false);
 
+  //list sugget english keywords
+  const suggestKeywords = [
+    "nature",
+    "animals",
+    "technology",
+    "food",
+    "travel",
+    "people",
+    "cities",
+    "art",
+    "yoga",
+    "music",
+    "fashion",
+    "history",
+    "science",
+  ];
+
   const isValidQuery = (query) => {
     const trimmedQuery = query.trim();
     // Kiểm tra query rỗng
@@ -36,7 +53,12 @@ export default function SearchBar({ onSearch, onReset, images }) {
     setSearchSubmitted(true);
     onSearch(query.trim());
   };
-
+  const handleSuggestionClick = (keyword) => {
+    setQuery(keyword);
+    setError("");
+    setSearchSubmitted(true);
+    onSearch(keyword);
+  };
   const noResults = searchSubmitted && images && images.length === 0;
 
   return (
@@ -68,6 +90,20 @@ export default function SearchBar({ onSearch, onReset, images }) {
       >
         Search
       </button>
+
+      {/* tu khoa goi y */}
+      <div className="flex flex-wrap gap-2 mt-2">
+        {suggestKeywords.map((keyword) => (
+          <button
+            key={keyword}
+            type="button"
+            onClick={() => handleSuggestionClick(keyword)}
+            className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition duration-150"
+          >
+            {keyword}
+          </button>
+        ))}
+      </div>
     </form>
   );
 }
