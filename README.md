@@ -34,3 +34,31 @@ Lấy API key tại: https://unsplash.com/developers
 - npm run dev
 
 Ứng dụng sẽ chạy tại: http://localhost:5173
+
+### 5 Cài đặt và chạy test với Vitest
+
+1. Cài các package cần thiết:
+
+npm install --save-dev vitest @testing-library/react @testing-library/jest-dom jsdom
+
+2. Tạo file vitest.config.js:
+
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+plugins: [react()],
+test: {
+environment: 'jsdom',
+globals: true,
+setupFiles: './setupTests.js'
+},
+});
+
+3. Tạo file setupTests.js ở thư mục gốc
+
+import '@testing-library/jest-dom';
+
+4. sử dụng câu lệnh để chạy test
+
+npm run test
