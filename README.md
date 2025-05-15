@@ -30,13 +30,17 @@ cd Image_Search_Gallery
 
 Lấy API key tại: https://unsplash.com/developers
 
-### 4 : Chạy dự án với lệnh
+### cài đặt icon
+
+npm install react-icons
+
+### 5: Chạy dự án với lệnh
 
 - npm run dev
 
 Ứng dụng sẽ chạy tại: http://localhost:5173
 
-### 5 Cài đặt và chạy test với Vitest
+### 6 Cài đặt và chạy test với Vitest
 
 1. Cài các package cần thiết:
 
