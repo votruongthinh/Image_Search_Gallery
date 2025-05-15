@@ -55,6 +55,9 @@ export default function ImageGrid({ images, loading, error }) {
               loading="lazy" // Tải ảnh lười để tối ưu
               onError={(e) => console.error("Error loading image:", e)} // Log lỗi nếu ảnh không tải được
             />
+            <p className="p-2 text-sm text-gray-700">
+              {img.user?.name || "Unknown"}
+            </p>
           </div>
         ))}
       </div>
