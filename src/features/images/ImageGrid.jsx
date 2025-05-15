@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import StatusMessage from "../../components/StatusMessage";
-import { FiMaximize2, FiMinimize2 } from "react-icons/fi";
+import {
+  FiMaximize2,
+  FiMinimize2,
+  FiUser,
+  FiCalendar,
+  FiHeart,
+  FiImage,
+  FiLink,
+} from "react-icons/fi";
 
 export default function ImageGrid({ images, loading, error }) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Xử lý phím Esc để đóng modal
   useEffect(() => {
     const handleEsc = (event) => {
       if (event.key === "Escape") {
@@ -42,21 +49,21 @@ export default function ImageGrid({ images, loading, error }) {
         {images.slice(0, 12).map((img) => (
           <div
             key={img.id}
-            className="overflow-hidden rounded-lg shadow-lg cursor-pointer"
+            className="overflow-hidden rounded-lg shadow-lg cursor-pointer bg-white"
             onClick={() => {
               setSelectedImage(img);
-              setIsFullscreen(false); // Reset chế độ toàn màn hình khi chọn ảnh mới
+              setIsFullscreen(false);
             }}
           >
             <img
               src={img.urls.small}
               alt={img.alt_description || "Image"}
               className="w-full h-60 object-cover"
-              loading="lazy" // Tải ảnh lười để tối ưu
-              onError={(e) => console.error("Error loading image:", e)} // Log lỗi nếu ảnh không tải được
+              loading="lazy"
+              onError={(e) => console.error("Error loading image:", e)}
             />
-            <p className="p-2 text-sm text-gray-700">
-              {img.user?.name || "Unknown"}
+            <p className="p-2 text-sm text-gray-700 flex items-center gap-2">
+              <FiUser /> {img.user?.name || "Unknown"}
             </p>
           </div>
         ))}
@@ -87,49 +94,53 @@ export default function ImageGrid({ images, loading, error }) {
             <div className="flex flex-col gap-4">
               <div className="flex-1">
                 <img
-                  src={selectedImage.urls.regular} // Sử dụng regular thay vì full để giảm tải
+                  src={selectedImage.urls.regular}
                   alt={selectedImage.alt_description || "Image"}
                   className={`w-full object-contain rounded-lg select-none ${
                     isFullscreen ? "h-[85vh]" : "h-[200px] sm:h-[300px]"
                   }`}
                   style={{ userSelect: "none", touchAction: "pan-y" }}
-                  onError={(e) => console.error("Error loading full image:", e)} // Log lỗi nếu ảnh không tải được
+                  onError={(e) => console.error("Error loading full image:", e)}
                 />
               </div>
 
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-2 text-gray-700 text-sm sm:text-base">
                 <h2 className="text-base sm:text-lg font-bold text-gray-800">
                   {selectedImage.description ||
                     selectedImage.alt_description ||
                     "No description"}
                 </h2>
-                <p className="text-gray-600 text-xs sm:text-sm">
-                  <span className="font-semibold">By:</span>{" "}
+
+                <div className="flex items-center gap-2">
+                  <FiUser className="text-gray-500" />
                   {selectedImage.user?.name || "Unknown"}
-                </p>
+                </div>
+
                 {selectedImage.created_at && (
-                  <p className="text-gray-600 text-xs sm:text-sm">
-                    <span className="font-semibold">Created:</span>{" "}
+                  <div className="flex items-center gap-2">
+                    <FiCalendar className="text-gray-500" />
                     {new Date(selectedImage.created_at).toLocaleDateString()}
-                  </p>
+                  </div>
                 )}
+
                 {selectedImage.likes && (
-                  <p className="text-gray-600 text-xs sm:text-sm">
-                    <span className="font-semibold">Likes:</span>{" "}
+                  <div className="flex items-center gap-2">
+                    <FiHeart className="text-pink-500" />
                     {selectedImage.likes}
-                  </p>
+                  </div>
                 )}
+
                 {(selectedImage.width || selectedImage.height) && (
-                  <p className="text-gray-600 text-xs sm:text-sm">
-                    <span className="font-semibold">Dimensions:</span>{" "}
+                  <div className="flex items-center gap-2">
+                    <FiImage className="text-gray-500" />
                     {selectedImage.width || "N/A"} x{" "}
                     {selectedImage.height || "N/A"}
-                  </p>
+                  </div>
                 )}
 
                 {selectedImage.links?.html && (
-                  <p className="text-gray-600 text-xs sm:text-sm">
-                    <span className="font-semibold">Source:</span>{" "}
+                  <div className="flex items-center gap-2">
+                    <FiLink className="text-blue-500" />
                     <a
                       href={selectedImage.links.html}
                       target="_blank"
@@ -138,7 +149,7 @@ export default function ImageGrid({ images, loading, error }) {
                     >
                       View on Unsplash
                     </a>
-                  </p>
+                  </div>
                 )}
               </div>
             </div>
