@@ -7,6 +7,7 @@
 - 🎨 Tailwind CSS (responsive)
 - 🔐 .env (ẩn API key)
 - dùng `fetch` mặc định
+- dùng
 
 ---
 
